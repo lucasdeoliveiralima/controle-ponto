@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Registro de Ponto</title>
+</head>
+<body>
+    <h1>Controle de Ponto</h1>
+    <div id="form-container">
+        <label for="entrada">Entrada:</label>
+        <input type="time" id="entrada">
+        <label for="almoco">Almoço:</label>
+        <input type="time" id="almoco">
+        <label for="retorno">Retorno:</label>
+        <input type="time" id="retorno">
+        <label for="saida">Saída:</label>
+        <input type="time" id="saida">
+        <input type="submit" class="btn" value="Enviar">
+    </div>
+    <table id="tabela-ponto">
+        <thead>
+            <tr>
+                <th>Entrada</th>
+                <th>Almoço</th>
+                <th>Retorno</th>
+                <th>Saída</th>
+                <th>Total HE</th>
+            </tr>
+        </thead>
+        <tbody id="corpo-tabela">
+        </tbody>
+    </table>
+    <p>Horas Acumuladas: <span id="horas-acumuladas">0</span></p>
+    <script src="app.js"></script>
+</body>
+</html>
