@@ -1,37 +1,53 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Registro de Ponto</title>
+    <script defer src="app.js"></script>
+    <title>Document</title>
 </head>
 <body>
-    <h1>Controle de Ponto</h1>
-    <div id="form-container">
-        <label for="entrada">Entrada:</label>
-        <input type="time" id="entrada">
-        <label for="almoco">Almoço:</label>
-        <input type="time" id="almoco">
-        <label for="retorno">Retorno:</label>
-        <input type="time" id="retorno">
-        <label for="saida">Saída:</label>
-        <input type="time" id="saida">
-        <input type="submit" class="btn" value="Enviar">
-    </div>
-    <table id="tabela-ponto">
+    <header id="header">
+        <h1 class="titulo">Controle de Ponto</h1>
+    </header>
+    <main id="main">
+        <div class="ponto">
+            <div class="ponto__batida">
+                <label class="ponto__rotulo" for="entrada">Entrada</label>
+                <input type="time" name="entrada" id="entrada" class="ponto__horario">
+            </div>
+            <div class="ponto__batida">
+                <label class="ponto__rotulo" for="almoco">Almoço</label>
+                <input type="time" name="almoco" id="almoco" class="ponto__horario">
+            </div>
+            <div class="ponto__batida">
+                <label class="ponto__rotulo" for="retorno">Retorno</label>
+                <input type="time" name="almoco" id="almoco" class="ponto__horario">
+            </div>
+            <div class="ponto__batida">
+                <label class="ponto__rotulo" for="saida">Saída</label>
+                <input type="time" name="saida" id="saida" class="ponto__horario">
+            </div>
+        </div>
+        <div class="ponto">
+            <input type="submit" value="Registrar Horario" id="btn-enviar" class="botao">
+            <p class="horas-extras">Horas Extras: </p>
+            <p id="resultado"  class="horas-extras"></p>
+        </div>
+    </main>
+    <table class="controle-ponto">
         <thead>
             <tr>
                 <th>Entrada</th>
                 <th>Almoço</th>
                 <th>Retorno</th>
                 <th>Saída</th>
-                <th>Total HE</th>
             </tr>
         </thead>
-        <tbody id="corpo-tabela">
+        <tbody>
+            
         </tbody>
     </table>
-    <p>Horas Acumuladas: <span id="horas-acumuladas">0</span></p>
-    <script src="app.js"></script>
 </body>
 </html>

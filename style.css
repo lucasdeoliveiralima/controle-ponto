@@ -1,10 +1,48 @@
-table {
-    border-collapse: collapse;
-    width: 100%;
+:root{
+    font-size: 62.5%;
+    --primary-color: #343434;
+    --primary-font: 'Segoe UI', sans-serif;
 }
-
-th, td {
-    border: 1px solid black;
-    padding: 8px;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--primary-font);
+}
+body{
+    padding: 20px;
+}
+.titulo{
+    color: var(--primary-color);
+    font-size: 3rem;
+}
+.ponto{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 20px 0;   
+}
+.ponto__batida{
+    display: flex;
+    flex-direction: column;
+}
+.ponto__rotulo, .horas-extras{
+    font-size: 1.6rem;
+}
+.ponto__horario{
+    width: 13rem;
+}
+.botao{
+    width: 13rem;
+    height: 3rem;
+}
+.controle-ponto{
     text-align: center;
+    font-size: 1.5rem;
+    border-collapse: collapse;
+}
+td, th{
+    width: 10rem;
+    height: 4rem;
+    border: 1px solid;
 }

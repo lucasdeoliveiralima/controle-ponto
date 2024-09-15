@@ -1,36 +1,62 @@
-let horasAcumuladas = 0;
-const btnRegistro = document.querySelector(".btn");
+const batidas = document.querySelectorAll(".ponto__horario")
+const resultado = document.querySelector("#resultado")
+const btnRegistrarHE = document.querySelector("#btn-enviar")
+const controleBatidasTabela = document.querySelector("tbody")
 
-function registrarPonto() {
-    const entrada = new Date(`2023-11-22T${document.getElementById('entrada').value}`);
-    const almoco = new Date(`2023-11-22T${document.getElementById('almoco').value}`);
-    const retorno = new Date(`2023-11-22T${document.getElementById('retorno').value}`);
-    const saida = new Date(`2023-11-22T${document.getElementById('saida').value}`);
-    
-    const horasExtras = ((almoco - entrada) / 3600000 + (saida - retorno) / 3600000) - 8;
+let horasTrabalhadas = 0
+let horasExtras = 0
 
-    horasAcumuladas += horasExtras;
+const criarLinhaTabela = _ => controleBatidasTabela.insertRow()
+const criarCelulaTabela = linha => linha.insertCell()
 
-    if (horasAcumuladas > 20) {
-        alert('As horas extras não podem ultrapassar 20 horas');
-        horasAcumuladas -= horasExtras;
-        return;
-    }
-
-    document.getElementById('horas-acumuladas').textContent = horasAcumuladas.toFixed(2);
-
-    const tabela = document.getElementById('corpo-tabela');
-    const novaLinha = tabela.insertRow();
-    novaLinha.insertCell(0).textContent = entrada.toLocaleTimeString();
-    novaLinha.insertCell(1).textContent = almoco.toLocaleTimeString();
-    novaLinha.insertCell(2).textContent = retorno.toLocaleTimeString();
-    novaLinha.insertCell(3).textContent = saida.toLocaleTimeString();
-    novaLinha.insertCell(4).textContent = horasExtras.toFixed(2);
-
-    document.getElementById('entrada').value = '';
-    document.getElementById('almoco').value = '';
-    document.getElementById('retorno').value = '';
-    document.getElementById('saida').value = '';
+function inserirBatidasPonto(){
+    const novaLinha = criarLinhaTabela()
+    batidas.forEach(batida => criarCelulaTabela(novaLinha).innerHTML = batida.value)
 }
 
-btnRegistro.addEventListener('click', registrarPonto);
+function capturarHorarioBatidas(arrayBatidas){
+    let horarioBatidas = []
+    arrayBatidas.forEach((batida, i) => horarioBatidas[i] = batida.value)
+    horarioBatidas = horarioBatidas
+        .map(batida => batida.split(":"))
+        .map(([hora, minutos]) => [Number(hora), Number(minutos)])
+            
+    return horarioBatidas
+}
+
+function calcularHorasTrabalhadas(arrayBatidas){
+    const horarioBatidas = capturarHorarioBatidas(arrayBatidas)
+    const batidasEmMinutos = horarioBatidas.map(([hora, minutos], i) => {
+        if(i % 2 === 1) 
+            return hora * 60 + minutos 
+        else 
+            return (hora * 60 + minutos) * -1
+    })
+    const minutosTrabalhados = batidasEmMinutos.reduce((acc, minutos) => acc + minutos)
+    const horasTrabalhadas = minutosTrabalhados / 60
+    return horasTrabalhadas
+}
+
+function calcularHorasExtras(){
+    horasTrabalhadas = calcularHorasTrabalhadas(batidas)
+    horasExtras += horasTrabalhadas - 8
+    checarHoraExtraMaiorQueVinte(horasExtras)
+}
+
+function imprimirHorasExtras(horasExtras){
+    const horas = String(Math.floor(horasExtras)).padStart(2, '0')
+    const minutos = String(Math.floor(horasExtras % 1 * 60)).padStart(2,'0')
+    return `${horas}:${minutos}`
+}
+
+function checarHoraExtraMaiorQueVinte(horasExtras){
+    if(horasExtras > 20){
+        alert('Suas horas extras alcançaram o limite de 20 horas')
+        resultado.innerHTML = "20:00"
+        return
+    }
+    resultado.innerHTML = imprimirHorasExtras(horasExtras)
+}
+
+btnRegistrarHE.addEventListener('click', inserirBatidasPonto)
+btnRegistrarHE.addEventListener('click', calcularHorasExtras)
